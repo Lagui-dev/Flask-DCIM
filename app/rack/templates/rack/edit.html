@@ -1,0 +1,11 @@
+{% extends "rack/index.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <h3>{% if rack %}Modify a rack{% else %}Add a rack{% endif %}</h3>
+        {{ render_form(form) }}
+    </div>
+
+{%  endblock %}

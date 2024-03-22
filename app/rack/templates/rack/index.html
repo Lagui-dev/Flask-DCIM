@@ -1,16 +1,21 @@
 {% extends "base.html" %}
+
+
+{%  block subMenu %}
+                        <div class="collapse navbar-collapse nav nav-pills ms-2" id="navbarSupportedContent">
+{#                            <nav class="">#}
+                                    <a class="nav-link" href="/rack/list">List</a>
+                                    <a class="nav-link" href="/rack/add">Add</a
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+{#                            </nav>#}
+                        </div>
+{%  endblock %}
+
+
 {% block content %}
 
-<div class="container py-4 py-xl-5">
-    <div class="row gy-4 gy-md-0">
-        <div class="col-md-6 d-md-flex align-items-md-center">
-            <div style="max-width: 350px;">
-                <h2 class="text-uppercase fw-bold">Rack Page</h2>
-                <p class="my-3">Tincidunt laoreet leo, adipiscing taciti tempor. Primis senectus sapien, risus donec ad fusce augue interdum.</p>
-                <a class="btn btn-primary btn-lg me-2" role="button" href="#">Button</a>
-            </div>
-        </div>
-    </div>
+<div>
+DASHBOARD
 </div>
 
 {% endblock %}

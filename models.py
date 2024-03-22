@@ -1,15 +1,16 @@
-from sqlalchemy import Integer, DateTime, String, ForeignKey
-from sqlalchemy.orm import DeclarativeBase, relationship
+from sqlalchemy import Integer, DateTime, String, ForeignKey, Boolean
+from sqlalchemy.orm import relationship
 from sqlalchemy.orm import mapped_column, Mapped
-from typing import List
+from typing import List, Optional
 from datetime import datetime, timezone
 from app import db
 
 class TimeMixin(object):
     # Keep track when records are created and updated.
-    created: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now(timezone.utc))
-    updated: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
-    deleted: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now(timezone.utc))
+    created: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    deleted: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True, default=datetime.now(timezone.utc))
+    active: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True, default=True)
 
 class Rack(TimeMixin, db.Model):
     __tablename__ = 'rack'
