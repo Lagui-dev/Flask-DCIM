@@ -3,7 +3,7 @@ from flask import Blueprint
 
 from app import db
 from app.rack.forms import CreateRackForm, EditRackForm
-from models import Rack
+from models import Rack, Unit
 
 rack = Blueprint('rack_bp', __name__, template_folder='templates', static_folder='static')
 
@@ -23,9 +23,16 @@ def addRack():
     form = CreateRackForm()
     if form.validate_on_submit():
         rack = Rack(name = form.name.data)
+        # Créer le rack
         db.session.add(rack)
         db.session.commit()
-        flash('Rack added!')
+        # Créer les unités
+        unitCount = form.numberOfUnits.data
+        for i in range(unitCount):
+            new_unit = Unit(id_rack=rack.id, seq=i + 1)
+            db.session.add(new_unit)
+        db.session.commit()
+        flash(f'Rack {rack.name} (ID: {rack.id}) added!')
         return redirect(url_for('rack_bp.list'))
     return render_template('rack/edit.html', title='Racks', form=form)
 
@@ -34,25 +41,34 @@ def editRack(rack_id):
     rack = Rack.query.get_or_404(rack_id)
     form = EditRackForm(obj=rack)
     if form.validate_on_submit():
-        form.populate_obj(rack)
-        db.session.add(rack)
-        db.session.commit()
-        flash('Rack edited!')
-        return redirect(url_for('rack_bp.list'))
+        if form.submit.data:
+            form.populate_obj(rack)
+            db.session.add(rack)
+            db.session.commit()
+            flash(f'Rack {rack.name} (ID: {rack.id}) edited!')
+            return redirect(url_for('rack_bp.list'))
+        else:
+            return redirect(url_for('rack_bp.list'))
     return render_template('rack/edit.html', title='Racks', form=form)
-
-@rack.route('deactivate/<int:rack_id>', methods=('GET', 'POST'))
-def deactivateRack(rack_id):
-    rack = Rack.query.get_or_404(rack_id)
-    rack.active = False
-    db.session.commit()
-    flash('Rack deactivated')
-    return redirect(url_for('rack_bp.list'))
 
 @rack.route('toggle-activate/<int:rack_id>/toggle-active', methods=('GET', 'POST'))
 def toggleRackActivate(rack_id):
     rack = Rack.query.get_or_404(rack_id)
     rack.active = not rack.active
     db.session.commit()
-    flash('Rack activated/deactivated')
+    activation_status = "activated" if rack.active else "deactivated"
+    flash(f'Rack {rack.name} (ID: {rack.id}) {activation_status}')
     return redirect(url_for('rack_bp.list'))
+
+@rack.route('/delete/<int:rack_id>', methods=['GET', 'POST'])
+def deleteRack(rack_id):
+    rack = Rack.query.get_or_404(rack_id)
+    db.session.delete(rack)
+    db.session.commit()
+    flash(f'Rack {rack.name} (ID: {rack.id}) deleted!')
+    return redirect(url_for('rack_bp.list'))
+
+@rack.route('/view/<int:rack_id>', methods=['GET', 'POST'])
+def viewRack(rack_id):
+    rack = Rack.query.get_or_404(rack_id)
+    return render_template('rack/view.html', title='Rack', rack=rack)

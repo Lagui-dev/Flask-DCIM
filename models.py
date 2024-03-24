@@ -19,11 +19,11 @@ class Rack(TimeMixin, db.Model):
     name: Mapped[str] = mapped_column(String(50))
     units: Mapped[List['Unit']] = relationship('Unit', back_populates='rack')
 
-class Unit(db.Model):
+class Unit(TimeMixin, db.Model):
     __tablename__ = 'unit'
 
     id: Mapped[int] = mapped_column(primary_key=True)
     seq: Mapped[int] = mapped_column(Integer, nullable=False)
     id_rack:Mapped[int] = mapped_column(ForeignKey('rack.id'))
-    name: Mapped[str] = mapped_column(String(50))
+    name: Mapped[str] = mapped_column(String(50), nullable=True)
     rack: Mapped[Rack] = relationship('Rack', back_populates='units')

@@ -19,7 +19,7 @@ LIST
                         <td>{{ rack.name }}</td>
                         <td>{{ rack.active }}</td>
                         <td>
-                            <a href="{{ url_for('rack_bp.deactivateRack', rack_id=rack.id) }}" class="btn btn-primary">View</a>
+                            <a href="{{ url_for('rack_bp.viewRack', rack_id=rack.id) }}" class="btn btn-primary">View</a>
                             <a href="{{ url_for('rack_bp.editRack', rack_id=rack.id) }}" class="btn btn-secondary">Edit</a>
                             <form method="POST" action="{{ url_for('rack_bp.toggleRackActivate', rack_id=rack.id) }}" style="display:inline;">
                                 <button type="submit" class="btn btn-danger">

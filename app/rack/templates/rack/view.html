@@ -1,0 +1,15 @@
+{% extends "rack/index.html" %}
+
+{% block content %}
+
+    <h1>Rack: {{ rack.name }}</h1>
+    <div class="container-fluid col-3">
+        {% for unit in rack.units %}
+            <div class="row mb-2" style="height: 50px">
+                <div class="col" style="background-color:lightskyblue">unit : {{ unit.seq }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
