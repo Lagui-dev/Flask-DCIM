@@ -13,10 +13,13 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
 
-    from app.main.main import main as main_bp
+    from app.main.routes import main as main_bp
     app.register_blueprint(main_bp, url_prefix='/main')
 
-    from app.rack.rack import rack as rack_bp
+    from app.rack.routes import rack as rack_bp
     app.register_blueprint(rack_bp, url_prefix='/rack')
+
+    from app.hardware.routes import hardware as hardware_bp
+    app.register_blueprint(hardware_bp, url_prefix='/hardware')
 
     return app
