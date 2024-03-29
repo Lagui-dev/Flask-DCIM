@@ -1,0 +1,35 @@
+{% extends "rack/index.html" %}
+{% block content %}
+    <style>
+        .card {
+            margin-right: 10px; /* Modifier la valeur selon vos besoins */
+        }
+    </style>
+    LIST
+    <div class="card-group">
+        {% for hardware in hardware_list %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ hardware.name }}
+                    </h5>
+                    <p class="card-text">
+                    {{ hardware.type }}<br>
+                    <small>id : {{ hardware.id }}</small>
+
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group btn-group-justified">
+                        <button type="button" class="btn btn-success"><i class="bi bi-eyeglasses"></i></button>
+                        <button type="button" class="btn btn-secondary"><i class="bi bi-pen"></i></button>
+                        <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+{#                        <button type="button" class="btn btn-primary"><i class="bi bi-plus"></i></button>#}
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

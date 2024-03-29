@@ -10,12 +10,12 @@ rack = Blueprint('rack_bp', __name__, template_folder='templates', static_folder
 @rack.route('/', methods=['GET', 'POST'])
 @rack.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('rack/index.html', title="Racks", active_rack='active')
+    return render_template('rack/index.html', title="Racks")
 
 @rack.route('/list', methods=['GET', 'POST'])
 def list():
     racks = Rack.query.all()
-    return render_template('rack/list.html', title='Racks', racks=racks, active_rack='active')
+    return render_template('rack/list.html', title='Racks', racks=racks)
 
 @rack.route('/new', methods=['GET', 'POST'])
 def new():
@@ -33,7 +33,7 @@ def new():
         db.session.commit()
         flash(f'Rack {rack.name} (ID: {rack.id}) added!')
         return redirect(url_for('rack_bp.list'))
-    return render_template('rack/edit.html', title='New Rack', form=form, active_rack='active')
+    return render_template('rack/edit.html', title='New Rack', form=form)
 
 @rack.route('/edit/<int:rack_id>', methods=['GET', 'POST'])
 def edit(rack_id):
@@ -48,7 +48,7 @@ def edit(rack_id):
             return redirect(url_for('rack_bp.list'))
         else:
             return redirect(url_for('rack_bp.list'))
-    return render_template('rack/edit.html', title='Edit Rack', form=form, active_rack='active')
+    return render_template('rack/edit.html', title='Edit Rack', form=form)
 
 @rack.route('toggle-activate/<int:rack_id>/toggle-active', methods=('GET', 'POST'))
 def toggle_activate(rack_id):
@@ -70,4 +70,4 @@ def delete(rack_id):
 @rack.route('/view/<int:rack_id>', methods=['GET', 'POST'])
 def view(rack_id):
     rack = Rack.query.get_or_404(rack_id)
-    return render_template('rack/view.html', title='Rack', rack=rack, active_rack='active')
+    return render_template('rack/view.html', title='Rack', rack=rack)

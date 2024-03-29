@@ -19,11 +19,13 @@ def new():
         db.session.commit()
         flash('New hardware was created!')
         return redirect(url_for('hardware_bp.index'))
-    return render_template('hardware/edit.html', title="New Hardware", form=form, active_hardware='active')
+    return render_template('hardware/edit.html', title="New Hardware", form=form)
 
 @hardware.route('/list', methods=['GET', 'POST'])
 def list():
-    pass
+    hardware_list = Hardware.query.all()
+    return render_template('hardware/list.html', title="Hardware List", hardware_list=hardware_list)
+
 
 @hardware.route('/linked', methods=['GET', 'POST'])
 def linked():
