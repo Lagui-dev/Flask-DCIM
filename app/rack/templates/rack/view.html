@@ -21,9 +21,9 @@
                                         <input class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" type="text" value="{% if unit.name %}{{ unit.name }}{% endif %}">
                                     </div>
                                     <div class="col-1">
-                                        <button class="btn btn-primary btn" type="submit">
-                                            <i class="bi bi-arrow-clockwise" tooltip="Save"></i>
-                                            <i class="bi bi-check d-none" tooltip="Saved"></i>
+                                        <button class="btn btn-primary btn" type="submit" data-toggle="tooltip" title="Save">
+                                            <i class="bi bi-arrow-clockwise"></i>
+                                            <i class="bi bi-check d-none"></i>
                                         </button>
                                     </div>
                                     <div class="col-1 text-end">
@@ -41,7 +41,14 @@
                                 <div class="col">
                                     <div class="card border-danger">
                                         <div class="card-header">
-                                        {{ unit_hardware.hardware.id }} / {{ unit_hardware.hardware.name }} <br>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    {{ unit_hardware.hardware.name }}
+                                                </div>
+                                                <div class="col-6 text-end">
+                                                    <small>id : {{ unit_hardware.hardware.id }}</small>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

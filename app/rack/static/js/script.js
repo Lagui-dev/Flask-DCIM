@@ -15,6 +15,7 @@ $( document ).ready(function(){
 
             // Désactiver le bouton
             $(this).find('button[type="submit"]').prop('disabled', true);
+			$(this).find('button[type="submit"]').prop('title', 'Saved');
 
 		$.ajax({
 			url: '/rack/edit_unit',
