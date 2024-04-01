@@ -1,37 +1,55 @@
 {% extends "rack/index.html" %}
 {% block content %}
 
-<div>
-LIST
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Active</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for rack in racks %}
-                    <tr>
-                        <td>{{ rack.id }}</td>
-                        <td>{{ rack.name }}</td>
-                        <td>{{ rack.active }}</td>
-                        <td>
-                            <a href="{{ url_for('rack_bp.view', rack_id=rack.id) }}" class="btn btn-primary">View</a>
-                            <a href="{{ url_for('rack_bp.edit', rack_id=rack.id) }}" class="btn btn-secondary">Edit</a>
-                            <form method="POST" action="{{ url_for('rack_bp.toggle_activate', rack_id=rack.id) }}" style="display:inline;">
-                                <button type="submit" class="btn btn-danger">
-                                {{ 'Deactivate' if rack.active else 'Activate' }}
-              </button>
-            </form>
+    <h3>{{ title }}</h3>
 
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-</div>
+    <div class="row row-cols-2 row-cols-md-4 g-2">
+        {% for rack in racks_list %}
+
+            {% set ns = namespace(hardware_count=0,demo=0) %}
+
+            {% for unit in rack.units %}
+                {% set ns.hardware_count = ns.hardware_count + unit.unit_hardware|length %}
+            {% endfor %}
+
+            <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">
+                        {{ rack.name }}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        No of hardware : {{ ns.hardware_count }}<br>
+                        No of units : {{ rack.units|length }}<br>
+                        <small>id : {{ rack.id }}</small>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group btn-group-justified">
+                        <a href="{{ url_for('rack_bp.view', rack_id=rack.id) }}" role="button" class="btn btn-success btn-sm" tooltip="tooltip" title="View">
+                            <i class="bi bi-eyeglasses"></i>
+                        </a>
+                        <a href="{{ url_for('rack_bp.edit', rack_id=rack.id) }}" role="button" class="btn btn-secondary btn-sm" tooltip="tooltip" title="Edit">
+                            <i class="bi bi-pen"></i>
+                        </a>
+                        <a href="{{ url_for('rack_bp.toggle_activate', rack_id=rack.id) }}" role="button" class="btn btn-danger btn-sm" tooltip="tooltip" title="Toggle On/Off">
+                            {% if rack.active %} <i class="bi bi-toggle-on"></i> {% else %}<i class="bi bi-toggle-off"></i> {% endif %}
+                        </a>
+                    </div>
+                    <div class="btn-group btn-group-justified">
+                        <a href="{{ url_for('rack_bp.add_unit', rack_id=rack.id) }}" role="button" class="btn btn-primary btn-sm" tooltip="tooltip" title="add unit">
+                            <i class="bi bi-plus-circle"></i>
+                        </a>
+                        <a href="{{ url_for('rack_bp.remove_unit', rack_id=rack.id) }}" role="button" class="btn btn-outline-primary btn-sm" tooltip="tooltip" title="remove last unit">
+                            <i class="bi bi-dash-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+    </div>
 
 {%  endblock %}

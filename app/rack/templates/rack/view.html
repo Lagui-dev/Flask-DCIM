@@ -1,13 +1,60 @@
 {% extends "rack/index.html" %}
-
+{% from "bootstrap5/form.html" import render_form %}
 {% block content %}
 
-    <h1>Rack: {{ rack.name }}</h1>
-    <div class="container-fluid col-3">
+<script src="{{ url_for('rack_bp.static', filename='js/script.js') }}"></script>
+
+    <h1>{{ title }} of {{ rack.name }}</h1>
+    <div class="row row-cols-1 row-cols-md-1 g-4">
+
         {% for unit in rack.units %}
-            <div class="row mb-2" style="height: 50px">
-                <div class="col" style="background-color:lightskyblue">unit : {{ unit.seq }}</div>
+
+            <div class="col">
+
+                <div class="card border-primary">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <form class="edit_name_unit">
+                                <div class="row g-1">
+                                    <div class="col-10">
+                                        <input type="hidden" readonly="" name="unit_id" value="{{ unit.id }}">
+                                        <input class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" type="text" value="{% if unit.name %}{{ unit.name }}{% endif %}">
+                                    </div>
+                                    <div class="col-1">
+                                        <button class="btn btn-primary btn" type="submit">
+                                            <i class="bi bi-arrow-clockwise" tooltip="Save"></i>
+                                            <i class="bi bi-check d-none" tooltip="Saved"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-1 text-end">
+                                        <label class="form-label" for="unit_name">u : {{ unit.seq }} </label>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <div class="row row-cols-2 row-cols-md-4 g-2">
+                            {% for unit_hardware in unit.unit_hardware %}
+                                <div class="col">
+                                    <div class="card border-danger">
+                                        <div class="card-header">
+                                        {{ unit_hardware.hardware.id }} / {{ unit_hardware.hardware.name }} <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
             </div>
+
         {% endfor %}
     </div>
 
