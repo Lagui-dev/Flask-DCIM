@@ -2,7 +2,7 @@
 {% from "bootstrap5/form.html" import render_form %}
 {% block content %}
 
-<script src="{{ url_for('rack_bp.static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('rack_bp.static', filename='js/scripts.js') }}"></script>
 
     <h1>{{ title }} of {{ rack.name }}</h1>
     <div class="row row-cols-1 row-cols-md-1 g-4">
@@ -45,8 +45,15 @@
                                                 <div class="col-6">
                                                     {{ unit_hardware.hardware.name }}
                                                 </div>
-                                                <div class="col-6 text-end">
+                                                <div class="col-4 text-end">
                                                     <small>id : {{ unit_hardware.hardware.id }}</small>
+                                                </div>
+                                                <div class="col-2 text-end">
+                                                    <div class="btn-group btn-group-justified">
+                                                        <a href="{{ url_for('rack_bp.unlink_hardware', unit_hardware_id=unit_hardware.id) }}" role="button', rack_id=rack.id) }}" role="button" class="btn btn-danger btn-sm" tooltip="tooltip" title="Remove hardware">
+                                                            <i class="bi bi-dash"></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

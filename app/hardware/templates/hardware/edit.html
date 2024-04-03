@@ -4,7 +4,7 @@
 {% block content %}
 
     <div class="container mt-5">
-        <h3>{% if rack %}Modify a hardware{% else %}Add a hardware{% endif %}</h3>
+        <h3>{{ title}}</h3>
         {{ render_form(form) }}
     </div>
 

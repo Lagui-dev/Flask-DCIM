@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, json, request
+from flask import render_template, flash, redirect, url_for, json, jsonify, request
 from flask import Blueprint
 from sqlalchemy import func
 
@@ -71,6 +71,12 @@ def view(rack_id):
     rack = Rack.query.get_or_404(rack_id)
     return render_template('rack/view.html', title='Units', rack=rack)
 
+@rack.route('/get_units/<int:rack_id>', methods=['GET', 'POST'])
+def get_units(rack_id):
+    rack = Rack.query.get_or_404(rack_id)
+    units = [{'id': unit.id, 'name': unit.name, 'seq': unit.seq} for unit in rack.units]
+    return jsonify({'units': units})
+
 @rack.route('rack_hardware_count/<int:rack_id>', methods=['GET', 'POST'])
 def rack_hardware_count(rack_id):
     hardware_count = db.session.query(func.count(Hardware.id)).join(UnitHardware).join(Unit).join(Rack).filter(Rack.id == rack_id).scalar()
@@ -115,3 +121,11 @@ def edit_unit():
     unit.name = unit_name
     db.session.commit()
     return json.dumps({'success': True, 'unit_name': unit_name, 'unit_id': unit_id})
+
+@rack.route('unlink_hardware/<int:unit_hardware_id>', methods=['GET', 'POST'])
+def unlink_hardware(unit_hardware_id):
+    unit_hardware = UnitHardware.query.get_or_404(unit_hardware_id)
+    rack_id = unit_hardware.unit.id_rack
+    db.session.delete(unit_hardware)
+    db.session.commit()
+    return redirect(url_for('rack_bp.view', rack_id=rack_id))

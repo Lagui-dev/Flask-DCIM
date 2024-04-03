@@ -20,3 +20,7 @@ class EditHardwareForm(FlaskForm):
     submit = SubmitField('Edit')
     supress = SubmitField('Cancel')
 
+class LinkHardwareUnitForm(FlaskForm):
+    rack = SelectField('Rack', coerce=int, validators=[DataRequired()])
+    unit =  SelectField('Unit', coerce=int, validators=[DataRequired()])
+    submit = SubmitField('Link')

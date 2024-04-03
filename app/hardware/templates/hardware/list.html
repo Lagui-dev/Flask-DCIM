@@ -24,13 +24,22 @@
                         <a href="{{ url_for('hardware_bp.view', hardware_id=hardware.id) }}" role="button" class="btn btn-success btn-sm" tooltip="tooltip" title="View">
                             <i class="bi bi-eyeglasses"></i>
                         </a>
+                    </div>
+                    <div class="btn-group btn-group-justified">
                         <a href="{{ url_for('hardware_bp.edit', hardware_id=hardware.id) }}" role="button" class="btn btn-secondary btn-sm" tooltip="tooltip" title="Edit">
                             <i class="bi bi-pen"></i>
                         </a>
-                        <a href="{{ url_for('hardware_bp.toggle_activate', hardware_id=hardware.id) }}" role="button" class="btn btn-primary btn-sm" tooltip="tooltip" title="Toggle On/Off">
+                        <a href="{{ url_for('hardware_bp.toggle_activate', hardware_id=hardware.id) }}" role="button" class="btn btn-danger btn-sm" tooltip="tooltip" title="Toggle On/Off">
                             {% if hardware.active %} <i class="bi bi-toggle-on"></i> {% else %}<i class="bi bi-toggle-off"></i> {% endif %}
                         </a>
                     </div>
+                    <div class="btn-group btn-group-justified">
+                        <a href="{{ url_for('hardware_bp.link_hardware_unit', hardware_id=hardware.id) }}" role="button" class="btn btn-primary btn-sm" tooltip="tooltip" title="Link">
+                            <i class="bi bi-link"></i>
+
+                        </a>
+                    </div>
+
                 </div>
             </div>
             </div>

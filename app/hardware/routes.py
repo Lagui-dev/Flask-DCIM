@@ -2,8 +2,8 @@ from flask import render_template, flash, redirect, url_for
 from flask import Blueprint
 
 from app import db
-from app.hardware.forms import CreateHardwareForm, EditHardwareForm
-from models import Hardware, Unit, UnitHardware
+from app.hardware.forms import CreateHardwareForm, EditHardwareForm, LinkHardwareUnitForm
+from models import Hardware, Unit, UnitHardware, Rack
 
 hardware = Blueprint('hardware_bp', __name__, template_folder='templates', static_folder='static')
 
@@ -26,16 +26,6 @@ def list():
     hardware_list = Hardware.query.all()
     return render_template('hardware/list.html', title="Hardware List", hardware_list=hardware_list)
 
-
-@hardware.route('/linked', methods=['GET', 'POST'])
-def linked():
-    unit_instance = Unit.query.get(12)
-    hardware_instance = Hardware.query.get(3)
-    unit_hardware_instance = UnitHardware(unit=unit_instance, hardware=hardware_instance)
-    db.session.add(unit_hardware_instance)
-    db.session.commit()
-    return "OK"
-
 @hardware.route('/view/<int:hardware_id>', methods=['GET', 'POST'])
 def view(hardware_id):
     pass
@@ -57,5 +47,30 @@ def edit(hardware_id):
 def toggle_activate(hardware_id):
     pass
 
-
-
+@hardware.route ('/link_hardware_unit/<int:hardware_id>', methods=['GET', 'POST'])
+def link_hardware_unit(hardware_id):
+    form = LinkHardwareUnitForm()
+    form.rack.choices = [(rack.id, rack.name) for rack in Rack.query.all()]
+    if form.rack.choices:
+        first_rack_id = form.rack.choices[0][0]
+        units_of_first_rack = Unit.query.join(Unit.rack).filter(Rack.id == first_rack_id).all()
+        form.unit.choices = [(unit.id, f"{unit.seq} - {unit.name}" if unit.name is not None else str(unit.seq)) for unit in units_of_first_rack]
+    else:
+        flash('No rack found!')
+        return redirect(url_for('hardware_bp.list'))
+    id_unit = form.unit.data
+    hardware = Hardware.query.get(hardware_id)
+    if form.validate_on_submit():
+        unit = Unit.query.get(id_unit)
+        # vérifier si le lien existe déjà
+        existing_link = UnitHardware.query.filter_by(id_unit=id_unit, id_hardware=hardware_id).first()
+        if existing_link:
+            flash('This link already exists!')
+        else:
+            new_link = UnitHardware(unit=unit, hardware=hardware)
+            db.session.add(new_link)
+            db.session.commit()
+            flash('Hardware was linked to unit!')
+            return redirect(url_for('hardware_bp.list'))
+    return render_template('hardware/link_hardware_unit.html', title="Link Hardware to Unit",
+                           form=form, hardware=hardware)
