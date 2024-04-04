@@ -1,5 +1,6 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from flask import Blueprint
+
 
 from app import db
 from app.hardware.forms import CreateHardwareForm, EditHardwareForm, LinkHardwareUnitForm
@@ -52,9 +53,12 @@ def link_hardware_unit(hardware_id):
     form = LinkHardwareUnitForm()
     form.rack.choices = [(rack.id, rack.name) for rack in Rack.query.all()]
     if form.rack.choices:
-        first_rack_id = form.rack.choices[0][0]
-        units_of_first_rack = Unit.query.join(Unit.rack).filter(Rack.id == first_rack_id).all()
-        form.unit.choices = [(unit.id, f"{unit.seq} - {unit.name}" if unit.name is not None else str(unit.seq)) for unit in units_of_first_rack]
+        first_rack_id = form.data['rack']
+        print(first_rack_id)
+        if first_rack_id is None:
+            first_rack_id = form.rack.choices[0][0]
+        units_of_rack = Unit.query.filter(Unit.id_rack == first_rack_id).all()
+        form.unit.choices = [(unit.id, f"{unit.seq} - {unit.name}" if unit.name is not None else str(unit.seq)) for unit in units_of_rack]
     else:
         flash('No rack found!')
         return redirect(url_for('hardware_bp.list'))
@@ -65,8 +69,10 @@ def link_hardware_unit(hardware_id):
         # vérifier si le lien existe déjà
         existing_link = UnitHardware.query.filter_by(id_unit=id_unit, id_hardware=hardware_id).first()
         if existing_link:
+            # ICI
             flash('This link already exists!')
         else:
+            print(form.data)
             new_link = UnitHardware(unit=unit, hardware=hardware)
             db.session.add(new_link)
             db.session.commit()

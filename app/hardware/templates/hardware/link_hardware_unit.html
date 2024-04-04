@@ -1,24 +1,25 @@
 {% extends "hardware/index.html" %}
+{% from "bootstrap5/form.html" import render_form %}
 
 {% block content %}
 
     <script src="{{ url_for('hardware_bp.static', filename='js/scripts.js') }}"></script>
 
     <h2>Link <u>{{ hardware.name }}</u> to </h2>
-    <form id="linkUnitForm" method="POST">
-        {{ form.hidden_tag() }}
-        <div class="mb-3">
-            {{ form.rack.label(class="form-control-label") }}
-            {{ form.rack(id="rackSelect", class="form-control form-select") }}
-        </div>
-        <div class="mb-3">
-            {{ form.unit.label(class="form-control-label") }}
-            {{ form.unit(id="unitSelect", class="form-control form-select") }}
-        </div>
-        <div class="mb-3">
-            {{ form.submit(class="btn btn-primary") }}
-        </div>
-    </form>
-
+{#    <form id="linkUnitForm" method="POST">#}
+{#        {{ form.hidden_tag() }}#}
+{#        <div class="mb-3">#}
+{#            {{ form.rack.label(class="form-control-label") }}#}
+{#            {{ form.rack(id="rackSelect", class="form-control form-select") }}#}
+{#        </div>#}
+{#        <div class="mb-3">#}
+{#            {{ form.unit.label(class="form-control-label") }}#}
+{#            {{ form.unit(id="unitSelect", class="form-control form-select") }}#}
+{#        </div>#}
+{#        <div class="mb-3">#}
+{#            {{ form.submit(class="btn btn-primary") }}#}
+{#        </div>#}
+{#    </form>#}
+    {{ render_form(form) }}
 
 {% endblock %}

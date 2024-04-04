@@ -1,3 +1,6 @@
+//
+// UPDATE UNIT NAME in RACK/VIEW
+//
 $( document ).ready(function(){
 	// $('.update_form').click(function(){
 	$('.edit_name_unit').submit(function(e) {
