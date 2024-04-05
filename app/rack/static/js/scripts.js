@@ -53,3 +53,22 @@ $( document ).ready(function(){
         });
     }
 // });
+
+function filterUnitHardware() {
+    var filterValue = document.getElementById('filter-filled').value;
+    var cardUnits = document.querySelectorAll('.card-unit');
+
+    cardUnits.forEach(function (cardUnit) {
+        var cu = cardUnit.querySelector('.card-unit-hardware');
+        var hasChildren = cu.childElementCount >0;
+        if (filterValue === "") {
+            cardUnit.style.display = 'block'; // Afficher tous les éléments
+        } else if (filterValue === "true" && hasChildren) {
+            cardUnit.style.display = 'block'; // Afficher si l'élément a des enfants
+        } else if (filterValue === "false" && !hasChildren) {
+            cardUnit.style.display = 'block'; // Afficher si l'élément n'a pas d'enfants
+        } else {
+            cardUnit.style.display = 'none'; // Masquer les autres éléments
+        }
+    });
+}

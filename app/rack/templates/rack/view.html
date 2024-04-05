@@ -7,7 +7,7 @@
     <h1>{{ title }} of {{ rack.name }}</h1>
     <div class="row mb-2">
         <div class="col-2 text-end">
-            <select class="form-select" id="filter-filled" onchange="">
+            <select class="form-select" id="filter-filled" onchange="filterUnitHardware()">
                 <option value="">All</option>
                 <option value="true">Filled</option>
                 <option value="false">Not filled</option>
@@ -20,7 +20,7 @@
 
         {% for unit in rack.units %}
 
-            <div class="col">
+            <div class="col card-unit">
 
                 <div class="card border-primary">
                     <span class="position-absolute top-0 translate-middle badge rounded-pill border border-light bg-secondary">
@@ -54,7 +54,8 @@
                     </div>
                     <div class="card-body">
                         <div class="card-text">
-                            <div class="row row-cols-2 row-cols-md-4 g-2">
+                            <div class="row row-cols-2 row-cols-md-4 g-2 card-unit-hardware">
+
                                 {% for unit_hardware in unit.unit_hardware %}
                                     <div class="col">
                                         <div class="card border-danger">
@@ -81,6 +82,7 @@
                                         </div>
                                     </div>
                                 {% endfor %}
+
                             </div>
                         </div>
 
