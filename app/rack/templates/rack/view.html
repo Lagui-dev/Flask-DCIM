@@ -2,32 +2,50 @@
 {% from "bootstrap5/form.html" import render_form %}
 {% block content %}
 
-<script src="{{ url_for('rack_bp.static', filename='js/scripts.js') }}"></script>
+    <script src="{{ url_for('rack_bp.static', filename='js/scripts.js') }}"></script>
 
     <h1>{{ title }} of {{ rack.name }}</h1>
+    <div class="row mb-2">
+        <div class="col-2 text-end">
+            <select class="form-select" id="filter-filled" onchange="">
+                <option value="">All</option>
+                <option value="true">Filled</option>
+                <option value="false">Not filled</option>
+            </select>
+        </div>
+
+    </div>
     <div class="row row-cols-1 row-cols-md-1 g-4">
+
 
         {% for unit in rack.units %}
 
             <div class="col">
 
                 <div class="card border-primary">
+                    <span class="position-absolute top-0 translate-middle badge rounded-pill border border-light bg-secondary">
+                        {{ unit.seq }}
+                    </span>
+
                     <div class="card-header">
                         <div class="card-title">
                             <form class="edit_name_unit">
                                 <div class="row g-1">
                                     <div class="col-10">
                                         <input type="hidden" readonly="" name="unit_id" value="{{ unit.id }}">
-                                        <input class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" type="text" value="{% if unit.name %}{{ unit.name }}{% endif %}">
+                                        <input class="form-control" id="unit_name" name="unit_name"
+                                               placeholder="Unit Name" type="text"
+                                               value="{% if unit.name %}{{ unit.name }}{% endif %}">
                                     </div>
                                     <div class="col-1">
-                                        <button class="btn btn-primary btn" type="submit" data-toggle="tooltip" title="Save">
+                                        <button class="btn btn-primary btn" type="submit" data-toggle="tooltip"
+                                                title="Save">
                                             <i class="bi bi-arrow-clockwise"></i>
                                             <i class="bi bi-check d-none"></i>
                                         </button>
                                     </div>
                                     <div class="col-1 text-end">
-                                        <label class="form-label" for="unit_name">u : {{ unit.seq }} </label>
+
                                     </div>
 
                                 </div>
@@ -37,29 +55,32 @@
                     <div class="card-body">
                         <div class="card-text">
                             <div class="row row-cols-2 row-cols-md-4 g-2">
-                            {% for unit_hardware in unit.unit_hardware %}
-                                <div class="col">
-                                    <div class="card border-danger">
-                                        <div class="card-header">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    {{ unit_hardware.hardware.name }}
-                                                </div>
-                                                <div class="col-4 text-end">
-                                                    <small>id : {{ unit_hardware.hardware.id }}</small>
-                                                </div>
-                                                <div class="col-2 text-end">
-                                                    <div class="btn-group btn-group-justified">
-                                                        <a href="{{ url_for('rack_bp.unlink_hardware', unit_hardware_id=unit_hardware.id) }}" role="button', rack_id=rack.id) }}" role="button" class="btn btn-danger btn-sm" tooltip="tooltip" title="Remove hardware">
-                                                            <i class="bi bi-dash"></i>
-                                                        </a>
+                                {% for unit_hardware in unit.unit_hardware %}
+                                    <div class="col">
+                                        <div class="card border-danger">
+                                            <div class="card-header">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        {{ unit_hardware.hardware.name }}
+                                                    </div>
+                                                    <div class="col-4 text-end">
+                                                        <small>id : {{ unit_hardware.hardware.id }}</small>
+                                                    </div>
+                                                    <div class="col-2 text-end">
+                                                        <div class="btn-group btn-group-justified">
+                                                            <a href="{{ url_for('rack_bp.unlink_hardware', unit_hardware_id=unit_hardware.id) }}"
+                                                               role="button', rack_id=rack.id) }}" role="button"
+                                                               class="btn btn-danger btn-sm" tooltip="tooltip"
+                                                               title="Remove hardware">
+                                                                <i class="bi bi-dash"></i>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
                             </div>
                         </div>
 

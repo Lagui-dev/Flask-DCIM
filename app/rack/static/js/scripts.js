@@ -33,3 +33,23 @@ $( document ).ready(function(){
 		});
 	});
 });
+//
+//  REFRESH UNIT LIST WHEN FILTERING UNIT FILLED/NOT FILLED
+//
+// $(document).ready(function() {
+//     $('#filter-filled').change(function(rack_id) {
+//         var isFilled = $(this).val();
+    function filterFilled(isFilled, rackId) {
+        $.ajax({
+            type: 'GET',
+            url: '/rack/view/' + rackId,
+            data: {'is_filled': isFilled},
+            success: function(response) {
+                $('#unit-container').html(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+// });

@@ -6,7 +6,7 @@ $(document).ready(function () {
         var rackId = $(this).val();
         if (rackId) {
             $.ajax({
-                url: '/rack/get_units/' + rackId,
+                url: '/rack/api_get_units/' + rackId,
                 type: 'GET',
                 success: function (response) {
                     var units = response.units;

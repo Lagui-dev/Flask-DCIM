@@ -51,7 +51,8 @@ def toggle_activate(hardware_id):
 @hardware.route ('/link_hardware_unit/<int:hardware_id>', methods=['GET', 'POST'])
 def link_hardware_unit(hardware_id):
     form = LinkHardwareUnitForm()
-    form.rack.choices = [(rack.id, rack.name) for rack in Rack.query.all()]
+    form.rack.choices = [(rack.id, rack.name) for rack in Rack.query.filter_by(active=True).all()]
+
     if form.rack.choices:
         first_rack_id = form.data['rack']
         print(first_rack_id)
