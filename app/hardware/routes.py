@@ -48,7 +48,8 @@ def edit(hardware_id):
 
 @hardware.route('/view/<int:hardware_id>', methods=['GET', 'POST'])
 def view(hardware_id):
-    pass
+    hardware_item = Hardware.query.get_or_404(hardware_id)
+    return render_template('hardware/view.html', title="Hardware", hardware=hardware_item)
 
 
 @hardware.route('/toggle-activate/<int:hardware_id>', methods=['GET', 'POST'])

@@ -1,5 +1,37 @@
 {% extends "rack/index.html" %}
 {% from "bootstrap5/form.html" import render_form %}
+
+{% block subNavAction %}
+           <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-1">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">About</a>
+                </li>
+              </ul>
+                            <select class="form-select" id="filter-filled" onchange="filterUnitHardware()">
+                <option value="">All</option>
+                <option value="true">Filled</option>
+                <option value="false">Not filled</option>
+            </select>
+
+            </div>
+
+        </nav>
+{% endblock %}
+
+
 {% block content %}
 
     <script src="{{ url_for('rack_bp.static', filename='js/scripts.js') }}"></script>
@@ -7,11 +39,6 @@
     <h1>{{ title }} of {{ rack.name }}</h1>
     <div class="row mb-2">
         <div class="col-2 text-end">
-            <select class="form-select" id="filter-filled" onchange="filterUnitHardware()">
-                <option value="">All</option>
-                <option value="true">Filled</option>
-                <option value="false">Not filled</option>
-            </select>
         </div>
 
     </div>

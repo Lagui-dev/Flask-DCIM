@@ -74,8 +74,6 @@ def delete(rack_id):
 
 @rack.route('/view/<int:rack_id>', methods=['GET', 'POST'])
 def view(rack_id):
-    is_filled = request.args.get('is_filled', None)
-    print(is_filled)
     rack_item = Rack.query.get_or_404(rack_id)
     return render_template('rack/view.html', title='Units', rack=rack_item)
 
