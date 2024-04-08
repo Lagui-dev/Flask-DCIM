@@ -6,19 +6,23 @@ $( document ).ready(function(){
 	$('.edit_name_unit').submit(function(e) {
 		e.preventDefault();
 		var formData = $(this);
-		console.log(formData);
+
 
             // Sélectionner l'icône dans le formulaire soumis
-            var arrowIcon = $(this).find('.bi-arrow-clockwise');
-            var checkIcon = $(this).find('.bi-check');
+            // var arrowIcon = $(this).find('.bi-arrow-clockwise');
+            //var checkIcon = $(this).find('.bi-check');
 
             // Cacher l'icône de flèche et afficher l'icône de vérification
-            arrowIcon.addClass('d-none');
-            checkIcon.removeClass('d-none');
+            // arrowIcon.addClass('d-none');
+            // checkIcon.removeClass('d-none');
+
+            // Change la couleur du bouton
+            $(this).find('button[type="submit"]').removeClass('btn-primary').addClass('btn-success');
 
             // Désactiver le bouton
             $(this).find('button[type="submit"]').prop('disabled', true);
 			$(this).find('button[type="submit"]').prop('title', 'Saved');
+
 
 		$.ajax({
 			url: '/rack/edit_unit',

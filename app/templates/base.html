@@ -24,7 +24,7 @@
 <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
 
 
-<header class="mb-4">
+<header class="mb-4 sticky-top">
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
 
@@ -32,7 +32,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <a class="navbar-brand" href="#">Data Center Inventory and Asset Management</a>
+            <a class="navbar-brand" href="{{ url_for('home_page') }}">Data Center Inventory and Asset Management</a>
         </div>
 
 
@@ -105,31 +105,24 @@
     </nav>
 </header>
 
-<div class="container-fluid">
-    <main>
-<div class="row">
-    <div class="col-12">
 
+<main class="container-fluid" style="margin-bottom: 100px;">
+
+    <div class="container-fluid">
         {% block subNavAction %}{% endblock %}
-
     </div>
-</div>
 
 
-    <div class="row">
-    <div class="col-12">
-{% block content %}{% endblock %}
+    <div class="container-fluid">
+        {% block content %}{% endblock %}
     </div>
-</div>
-</div>
 
 
 </main>
 
 
-
-<footer class="text-center bg-dark mt-4">
-    <div class="container-fluid text-white py-lg-3">
+<footer class="text-center bg-secondary fixed-bottom">
+    <div class="container text-white">
         <ul class="list-inline">
             <li class="list-inline-item me-4"><a class="link-light" href="#">Web design</a></li>
             <li class="list-inline-item me-4"><a class="link-light" href="#">Development</a></li>
