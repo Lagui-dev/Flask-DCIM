@@ -1,7 +1,30 @@
 {% extends "rack/index.html" %}
-{% block content %}
 
-    <h3>{{ title }}</h3>
+
+{% block subNavAction %}
+           <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+             <div class="container-fluid">
+
+                 <span class="navbar-brand" style="font-size:x-large;">{{ title }}</span>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav">
+                <li class="nav-item px-2">
+                  <a class="btn btn-primary bi-plus-lg" href="{{ url_for('rack_bp.new') }}">
+                      Add</a>
+                </li>
+              </ul>
+            </div>
+             </div>
+        </nav>
+{% endblock %}
+
+{% block content %}
 
     <div class="row row-cols-2 row-cols-md-4 g-2">
         {% for rack in racks_list %}

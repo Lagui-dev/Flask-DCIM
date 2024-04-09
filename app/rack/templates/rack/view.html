@@ -2,45 +2,43 @@
 {% from "bootstrap5/form.html" import render_form %}
 
 {% block subNavAction %}
-           <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;>
-             <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
 
-               <span class="navbar-brand">Actions</span>
+            <span class="navbar-brand" style="font-size:x-large;">{{ title }}</span>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link active btn" aria-current="page" href="{{ url_for('rack_bp.new') }}">Add unit</a>
-                </li>
-                <li class="nav-item">
-                    <select class="form-select navbar-nav" id="filter-filled" onchange="filterUnitHardware()">
-                        <option value="">All units</option>
-                        <option value="true">Filled</option>
-                        <option value="false">Not filled</option>
-                    </select>
-                </li>
-                  <li>
-                      <button class="btn btn-primary" onclick="">Export</button>
-                  </li>
-              </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item px-1">
+                        <a class="btn btn-primary bi-arrow-left" href="{{ url_for('rack_bp.list_rack') }}">
+                            Back</a>
+                    </li>
 
-
+                    <li class="nav-item px-1">
+                        <select class="form-select" id="filter-filled" onchange="filterUnitHardware()">
+                            <option selected value="">All units</option>
+                            <option value="true">Filled</option>
+                            <option value="false">Not filled</option>
+                        </select>
+                    </li>
+                </ul>
             </div>
-             </div>
-        </nav>
+        </div>
+    </nav>
 {% endblock %}
 
+<!-- CONTENT -->
 
 {% block content %}
 
     <script src="{{ url_for('rack_bp.static', filename='js/scripts.js') }}"></script>
 
-    <h1>{{ title }} of {{ rack.name }}</h1>
+    <h1>{{ rack.name }}</h1>
     <div class="row mb-2">
         <div class="col-2 text-end">
         </div>
@@ -71,7 +69,7 @@
                                     <div class="col-1">
                                         <button class="btn btn-primary btn" type="submit" data-toggle="tooltip"
                                                 title="Save">
-{#                                            <i class="bi bi-arrow-clockwise"></i>#}
+                                            {#                                            <i class="bi bi-arrow-clockwise"></i>#}
                                             <i class="bi bi-check"></i>
                                         </button>
                                     </div>
@@ -85,7 +83,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-text">
-                            <div class="row row-cols-2 row-cols-md-4 g-2 card-unit-hardware">
+                            <div class="row row-cols-2 row-cols-lg-4 g-2 card-unit-hardware">
 
                                 {% for unit_hardware in unit.unit_hardware %}
                                     <div class="col">

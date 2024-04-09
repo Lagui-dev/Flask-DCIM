@@ -1,6 +1,30 @@
 {% extends "hardware/index.html" %}
 {% from "bootstrap5/form.html" import render_form %}
 
+{% block subNavAction %}
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+
+            <span class="navbar-brand" style="font-size:x-large;">{{ title }}</span>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item px-1">
+                        <a class="btn btn-primary bi-arrow-left" href="{{ url_for('hardware_bp.list_hardware') }}">
+                            Back</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+
 {% block content %}
 
     <script src="{{ url_for('hardware_bp.static', filename='js/scripts.js') }}"></script>
