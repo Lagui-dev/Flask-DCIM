@@ -1,7 +1,7 @@
-from typing import List, Any
+from typing import Any
 
-from flask import render_template, flash, redirect, url_for, request
 from flask import Blueprint
+from flask import render_template, flash, redirect, url_for
 
 from app import db
 from app.hardware.forms import CreateHardwareForm, EditHardwareForm, LinkHardwareUnitForm
@@ -19,7 +19,7 @@ def index():
 @hardware.route('/list', methods=['GET', 'POST'])
 def list_hardware():
     hardware_list: list[Any] = Hardware.query.all()
-    return render_template('hardware/list.html', title="Hardware List", hardware_list=hardware_list)
+    return render_template('hardware/list.html', title="List of Hardware", hardware_list=hardware_list)
 
 
 @hardware.route('/new', methods=['GET', 'POST'])
@@ -69,7 +69,6 @@ def link_hardware_unit(hardware_id):
 
     if form.rack.choices:
         first_rack_id = form.data['rack']
-        print(first_rack_id)
         if first_rack_id is None:
             first_rack_id = form.rack.choices[0][0]
         units_of_rack = Unit.query.filter(Unit.id_rack == first_rack_id).all()

@@ -1,0 +1,60 @@
+{% extends "interface/index.html" %}
+
+
+{% block subNavAction %}
+           <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+             <div class="container-fluid">
+
+                 <span class="navbar-brand" style="font-size:x-large;">{{ title }}</span>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav">
+                <li class="nav-item px-2">
+                  <a class="btn btn-primary bi-plus-lg" href="{{ url_for('interface_bp.new') }}">
+                      Add</a>
+                </li>
+              </ul>
+            </div>
+             </div>
+        </nav>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row row-cols-2 row-cols-md-4 g-2">
+        {% for interface in interface_list %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>{{ interface.name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ interface.hardware.name }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-group btn-group-justified">
+                            <a href="{{ url_for('interface_bp.view', interface_id=interface.id) }}" role="button" class="btn btn-success btn-sm" tooltip="tooltip" title="View">
+                                <i class="bi bi-eyeglasses"></i>
+                            </a>
+                        </div>
+                        <div class="btn-group btn-group-justified">
+                            <a href="{{ url_for('interface_bp.edit', interface_id=interface.id) }}" role="button" class="btn btn-secondary btn-sm" tooltip="tooltip" title="Edit">
+                                <i class="bi bi-pen"></i>
+                            </a>
+                            <a href="{{ url_for('interface_bp.toggle_activate', interface_id=interface.id) }}" role="button" class="btn btn-danger btn-sm" tooltip="tooltip" title="Toggle On/Off">
+                                {% if interface.active %} <i class="bi bi-toggle-on"></i> {% else %}<i class="bi bi-toggle-off"></i> {% endif %}
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{%  endblock %}

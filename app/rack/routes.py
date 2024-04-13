@@ -18,7 +18,7 @@ def index():
 @rack.route('/list', methods=['GET', 'POST'])
 def list_rack():
     racks = Rack.query.all()
-    return render_template('rack/list.html', title='List of racks', racks_list=racks)
+    return render_template('rack/list.html', title='List of rack', racks_list=racks)
 
 
 @rack.route('/new', methods=['GET', 'POST'])

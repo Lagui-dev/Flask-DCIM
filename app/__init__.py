@@ -22,4 +22,7 @@ def create_app(config_class=Config):
     from app.hardware.routes import hardware as hardware_bp
     app.register_blueprint(hardware_bp, url_prefix='/hardware')
 
+    from app.interface.routes import interface as interface_bp
+    app.register_blueprint(interface_bp, url_prefix='/interface')
+
     return app

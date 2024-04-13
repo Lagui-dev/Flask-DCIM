@@ -1,27 +1,74 @@
 {% extends "hardware/index.html" %}
-{% from "bootstrap5/form.html" import render_form %}
+{#{% from "bootstrap5/form.html" import render_form %}#}
 
-{% block content %}
-<div class="card">
-    <div class="card-header">
-        <h3>{{ hardware.name }}</h3>
-    </div>
 
-    <div class="card-body">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for hardware_unit in hardware.hardware_unit %}
-        <div class="col">
-        <div class="card">
-            <div class="card-header">
-                <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                   href="{{  url_for('rack_bp.view', rack_id=hardware_unit.unit.rack.id) }}">
-                    {{ hardware_unit.unit.rack.name }} - {{ hardware_unit.unit.seq }}
-                </a>
+{% block subNavAction %}
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+
+            <span class="navbar-brand" style="font-size:x-large;">{{ title }}</span>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item px-1">
+                        <a class="btn btn-primary bi-arrow-left" href="{{ url_for('hardware_bp.list_hardware') }}">
+                            Back</a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </nav>
+{% endblock %}
+
+<!-- CONTENT -->
+
+{% block content %}
+
+    <h1>{{ hardware.name }}</h1>
+    <!-- HARDWARE LOCALISATION  -->
+    <div class="row row-cols-1 row-cols-md-4 g-4 mb-5 mt-1">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Localisations</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for hardware_unit in hardware.hardware_unit %}
+                        <li class="list-group-item">
+                            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                               href="{{ url_for('rack_bp.view', rack_id=hardware_unit.unit.rack.id) }}">
+                                {{ hardware_unit.unit.rack.name }} - {{ hardware_unit.unit.seq }}
+                                ({{ hardware_unit.unit.name }})
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-    {% endfor %}
+        </div>
     </div>
+
+    <!-- HARDWARE INTERFACES -->
+    <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Interfaces</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for interface in hardware.interfaces %}
+                        <li class="list-group-item">
+                            {{ interface.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
-</div>
+
+
 {% endblock %}
